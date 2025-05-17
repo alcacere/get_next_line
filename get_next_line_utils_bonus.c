@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcacere <alcacere@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:12:44 by alcacere          #+#    #+#             */
-/*   Updated: 2025/05/17 18:56:30 by alcacere         ###   ########.fr       */
+/*   Updated: 2025/05/16 16:20:42 by alcacere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(char *str)
 {
@@ -27,7 +27,7 @@ char	*ft_strdup(char *str)
 	int		i;
 
 	i = -1;
-	dup = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
+	dup = (char *)malloc(ft_strlen(str) + 1);
 	if (!dup)
 		return (NULL);
 	while (str[++i])
@@ -44,7 +44,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = -1;
 	j = 0;
-	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!str)
 		return (NULL);
 	while (s1[++i])
@@ -85,7 +85,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len >= (s_len - start))
 		len = s_len - start;
-	sub = (char *)malloc(sizeof(char) * (len + 1));
+	sub = (char *)malloc(len + 1);
 	if (!sub)
 		return (NULL);
 	while (s[i] != '\0' && j < len)

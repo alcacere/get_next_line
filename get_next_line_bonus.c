@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alcacere <alcacere@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:18:56 by alcacere          #+#    #+#             */
-/*   Updated: 2025/05/17 19:58:04 by alcacere         ###   ########.fr       */
+/*   Updated: 2025/05/17 20:39:57 by alcacere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	ft_free(char **stc);
 char	*to_read(int fd, char *stc);
@@ -19,20 +19,20 @@ char	*set_line(char **stc);
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*stc;
+	static char	*stc[1024];
 
 	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
-		return (ft_free(&stc), NULL);
-	if (stc == NULL || nl_check(stc, '\n') < 0)
+		return (ft_free(&stc[fd]), NULL);
+	if (stc[fd] == NULL || nl_check(stc[fd], '\n') < 0)
 	{
-		if (stc == NULL)
-			stc = ft_strdup("");
-		stc = to_read(fd, stc);
-		if (stc == NULL || stc[0] == '\0')
-			return (ft_free(&stc), NULL);
+		if (stc[fd] == NULL)
+			stc[fd] = ft_strdup("");
+		stc[fd] = to_read(fd, stc[fd]);
+		if (stc[fd] == NULL || stc[fd][0] == '\0')
+			return (ft_free(&stc[fd]), NULL);
 	}
-	line = set_line(&stc);
+	line = set_line(&stc[fd]);
 	if (line == NULL)
 		return (NULL);
 	return (line);
@@ -97,12 +97,12 @@ void	ft_free(char **stc)
 	free(*stc);
 	*stc = NULL;
 }
-//
+
 //#include <stdio.h>
 //#include <fcntl.h>
 //int main()
 //{
-//	int fd = open("giant_line.txt", O_RDONLY);
+//	int fd = open("empty.txt", O_RDONLY);
 //	char *line = get_next_line(fd);
 //	printf("line: %s\n", line);
 //	free(line);
