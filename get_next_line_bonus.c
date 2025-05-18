@@ -6,7 +6,7 @@
 /*   By: alcacere <alcacere@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:18:56 by alcacere          #+#    #+#             */
-/*   Updated: 2025/05/17 20:39:57 by alcacere         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:11:04 by alcacere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -22,7 +22,7 @@ char	*get_next_line(int fd)
 	static char	*stc[1024];
 
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
+	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (ft_free(&stc[fd]), NULL);
 	if (stc[fd] == NULL || nl_check(stc[fd], '\n') < 0)
 	{
@@ -46,7 +46,7 @@ char	*to_read(int fd, char *stc)
 
 	if (stc == NULL)
 		return (NULL);
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buffer = (char *)malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
 	if (buffer == NULL)
 		return (ft_free(&stc), NULL);
 	rb = 1;

@@ -6,7 +6,7 @@
 /*   By: alcacere <alcacere@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:18:56 by alcacere          #+#    #+#             */
-/*   Updated: 2025/05/17 19:58:04 by alcacere         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:09:11 by alcacere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -46,7 +46,7 @@ char	*to_read(int fd, char *stc)
 
 	if (stc == NULL)
 		return (NULL);
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buffer = (char *)malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
 	if (buffer == NULL)
 		return (ft_free(&stc), NULL);
 	rb = 1;
@@ -97,12 +97,12 @@ void	ft_free(char **stc)
 	free(*stc);
 	*stc = NULL;
 }
-//
+
 //#include <stdio.h>
 //#include <fcntl.h>
 //int main()
 //{
-//	int fd = open("giant_line.txt", O_RDONLY);
+//	int fd = open("test_len.txt", O_RDONLY);
 //	char *line = get_next_line(fd);
 //	printf("line: %s\n", line);
 //	free(line);
