@@ -6,7 +6,7 @@
 /*   By: alcacere <alcacere@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:18:56 by alcacere          #+#    #+#             */
-/*   Updated: 2025/05/18 18:11:04 by alcacere         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:36:52 by alcacere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -22,7 +22,7 @@ char	*get_next_line(int fd)
 	static char	*stc[1024];
 
 	line = NULL;
-	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
+	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
 		return (ft_free(&stc[fd]), NULL);
 	if (stc[fd] == NULL || nl_check(stc[fd], '\n') < 0)
 	{
@@ -54,7 +54,7 @@ char	*to_read(int fd, char *stc)
 	{
 		rb = read(fd, buffer, BUFFER_SIZE);
 		if (rb < 0)
-			return (ft_free(&buffer), NULL);
+			return (ft_free(&stc), ft_free(&buffer), NULL);
 		buffer[rb] = '\0';
 		tmp = stc;
 		stc = ft_strjoin(tmp, buffer);
@@ -102,12 +102,21 @@ void	ft_free(char **stc)
 //#include <fcntl.h>
 //int main()
 //{
-//	int fd = open("empty.txt", O_RDONLY);
-//	char *line = get_next_line(fd);
-//	printf("line: %s\n", line);
-//	free(line);
-//	line = get_next_line(fd);
-//	printf("line: %s\n", line);
-//	free(line);
-//	close(fd);
+//	int fd1 = open("my_multiple_nl.txt", O_RDONLY);
+//	int fd2 = open("test_len.txt", O_RDONLY);
+//	char *line1 = NULL;
+//	char *line2 = NULL;
+//	while (1)
+//	{
+//		line1 = get_next_line(fd1);
+//		printf("line1: %s\n", line1);
+//		free(line1);
+//		line2 = get_next_line(fd2);
+//		printf("line2: %s\n", line2);
+//		free(line2);
+//		if (line1 == NULL && line2 == NULL)
+//			break ;
+//	}
+//	close(fd1);
+//	close(fd2);
 //}

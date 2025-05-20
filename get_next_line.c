@@ -6,7 +6,7 @@
 /*   By: alcacere <alcacere@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:18:56 by alcacere          #+#    #+#             */
-/*   Updated: 2025/05/18 18:09:11 by alcacere         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:30:52 by alcacere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -22,7 +22,7 @@ char	*get_next_line(int fd)
 	static char	*stc;
 
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
 		return (ft_free(&stc), NULL);
 	if (stc == NULL || nl_check(stc, '\n') < 0)
 	{
@@ -54,7 +54,7 @@ char	*to_read(int fd, char *stc)
 	{
 		rb = read(fd, buffer, BUFFER_SIZE);
 		if (rb < 0)
-			return (ft_free(&buffer), NULL);
+			return (ft_free(&stc), ft_free(&buffer), NULL);
 		buffer[rb] = '\0';
 		tmp = stc;
 		stc = ft_strjoin(tmp, buffer);
@@ -103,11 +103,15 @@ void	ft_free(char **stc)
 //int main()
 //{
 //	int fd = open("test_len.txt", O_RDONLY);
-//	char *line = get_next_line(fd);
-//	printf("line: %s\n", line);
-//	free(line);
-//	line = get_next_line(fd);
-//	printf("line: %s\n", line);
-//	free(line);
+//	char *line = NULL;
+//
+//	while (1)
+//	{
+//		line = get_next_line(fd);
+//		printf("line: %s\n", line);
+//		free(line);
+//		if (line == NULL)
+//			break ;
+//	}
 //	close(fd);
 //}
