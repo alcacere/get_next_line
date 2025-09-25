@@ -6,7 +6,7 @@
 /*   By: alcacere <alcacere@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:18:56 by alcacere          #+#    #+#             */
-/*   Updated: 2025/05/20 16:30:52 by alcacere         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:22:31 by alcacere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
@@ -81,9 +81,14 @@ char	*set_line(char **stc)
 		line = ft_substr(*stc, 0, ft_strlen(*stc));
 	if (line == NULL)
 		return (ft_free(&(*stc)), NULL);
-	if (index < 0)
+	if (index <= 0)
 		return (ft_free(&(*stc)), line);
 	*stc = ft_substr(*stc, index + 1, ft_strlen(*stc) - (index + 1));
+	if (ft_strlen(*stc) > 1 && index >= 0)
+	{
+		if ((*stc)[index + 1] == '\0')
+			return (ft_free(stc), line);
+	}
 	if (*stc == NULL)
 		return (ft_free(&tmp), ft_free(&line), NULL);
 	ft_free(&tmp);
@@ -98,20 +103,20 @@ void	ft_free(char **stc)
 	*stc = NULL;
 }
 
-//#include <stdio.h>
-//#include <fcntl.h>
-//int main()
-//{
-//	int fd = open("test_len.txt", O_RDONLY);
-//	char *line = NULL;
-//
-//	while (1)
-//	{
-//		line = get_next_line(fd);
-//		printf("line: %s\n", line);
-//		free(line);
-//		if (line == NULL)
-//			break ;
-//	}
-//	close(fd);
-//}
+#include <stdio.h>
+#include <fcntl.h>
+int main()
+{
+	int fd = open("test.txt", O_RDONLY);
+	char *line = NULL;
+
+	while (1)
+	{
+		line = get_next_line(fd);
+		printf("line: %s", line);
+		free(line);
+		if (line == NULL)
+			break ;
+	}
+	close(fd);
+}

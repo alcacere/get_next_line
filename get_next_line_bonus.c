@@ -6,7 +6,7 @@
 /*   By: alcacere <alcacere@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:18:56 by alcacere          #+#    #+#             */
-/*   Updated: 2025/05/20 16:36:52 by alcacere         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:28:33 by alcacere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line_bonus.h"
@@ -80,9 +80,14 @@ char	*set_line(char **stc)
 	else
 		line = ft_substr(*stc, 0, ft_strlen(*stc));
 	if (line == NULL)
-		return (ft_free(&(*stc)), NULL);
+		return (ft_free(stc), NULL);
 	if (index < 0)
-		return (ft_free(&(*stc)), line);
+		return (ft_free(stc), line);
+	if (ft_strlen(*stc) > 1 && index >= 0)
+	{
+		if ((*stc)[index + 1] == '\0')
+			return (ft_free(stc), line);
+	}
 	*stc = ft_substr(*stc, index + 1, ft_strlen(*stc) - (index + 1));
 	if (*stc == NULL)
 		return (ft_free(&tmp), ft_free(&line), NULL);
@@ -98,25 +103,25 @@ void	ft_free(char **stc)
 	*stc = NULL;
 }
 
-//#include <stdio.h>
-//#include <fcntl.h>
-//int main()
-//{
-//	int fd1 = open("my_multiple_nl.txt", O_RDONLY);
-//	int fd2 = open("test_len.txt", O_RDONLY);
-//	char *line1 = NULL;
-//	char *line2 = NULL;
-//	while (1)
-//	{
-//		line1 = get_next_line(fd1);
-//		printf("line1: %s\n", line1);
-//		free(line1);
-//		line2 = get_next_line(fd2);
-//		printf("line2: %s\n", line2);
-//		free(line2);
-//		if (line1 == NULL && line2 == NULL)
-//			break ;
-//	}
-//	close(fd1);
-//	close(fd2);
-//}
+#include <stdio.h>
+#include <fcntl.h>
+int main()
+{
+	int fd1 = open("quijote.txt", O_RDONLY);
+	int fd2 = open("quijote.txt", O_RDONLY);
+	char *line1 = NULL;
+	char *line2 = NULL;
+	while (1)
+	{
+		line1 = get_next_line(fd1);
+		printf("line1: %s\n", line1);
+		free(line1);
+		line2 = get_next_line(fd2);
+		printf("line2: %s\n", line2);
+		free(line2);
+		if (line1 == NULL && line2 == NULL)
+			break ;
+	}
+	close(fd1);
+	close(fd2);
+}
