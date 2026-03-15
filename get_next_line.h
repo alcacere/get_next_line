@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alcacere <alcacere@student.42madrid.c      +#+  +:+       +#+        */
+/*   By: alcacere <alcacere@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 17:19:23 by alcacere          #+#    #+#             */
-/*   Updated: 2025/05/17 18:48:27 by alcacere         ###   ########.fr       */
+/*   Created: 2026/02/15 19:34:23 by alcacere          #+#    #+#             */
+/*   Updated: 2026/03/15 22:36:22 by alcacere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 7 
+#  define BUFFER_SIZE 128
 # endif
 
-# include <stdlib.h>
-# include <unistd.h>
+# include "libft.h"
 
-size_t	ft_strlen(char *str);
-char	*ft_substr(char *s, unsigned int start, size_t len);
-char	*ft_strjoin(char *s1, char *s2);
-ssize_t	nl_check(char *s, int c);
-char	*ft_strdup(char *str);
+typedef struct s_gnl_state
+{
+	char	*buffer;
+	size_t	capacity;
+	size_t	len;
+}	t_gnl_state;
+
 char	*get_next_line(int fd);
 
 #endif
